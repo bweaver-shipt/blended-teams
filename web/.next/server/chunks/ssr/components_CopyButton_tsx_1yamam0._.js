@@ -1,3 +1,0 @@
-module.exports=[44242,a=>{"use strict";var b=a.i(87924),c=a.i(72131);a.s(["default",0,function({text:a}){let[d,e]=(0,c.useState)(!1),f=async()=>{await navigator.clipboard.writeText(a),e(!0),setTimeout(()=>e(!1),2e3)};return(0,b.jsx)("button",{onClick:f,className:"text-xs px-3 py-1 rounded border border-slate-300 bg-white hover:bg-slate-50 text-slate-600 transition-colors",children:d?"✓ Copied":"Copy"})}])}];
-
-//# sourceMappingURL=components_CopyButton_tsx_1yamam0._.js.map
