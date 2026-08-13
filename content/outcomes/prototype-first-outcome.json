@@ -1,0 +1,12 @@
+{
+  "id": "prototype-first-outcome",
+  "team": "payments-platform",
+  "title": "Prototype kickoff reduced clarification churn",
+  "summary": "The team reported fewer repeat clarification meetings before implementation started, but still needed engineering review for backend implications.",
+  "status": "kept",
+  "risks": ["usability", "feasibility"],
+  "dimensions": ["impact-learning", "delivery-autonomy"],
+  "linkedTools": ["prototype-to-pr"],
+  "linkedPlays": ["designer-ships-working-prototype"],
+  "linkedExperiments": ["prototype-first-discovery"]
+}

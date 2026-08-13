@@ -1,0 +1,14 @@
+{
+  "id": "new-play-id",
+  "title": "New borrowed skill title",
+  "role": "designer",
+  "adjacentRole": "engineer",
+  "team": "team-id",
+  "risks": ["usability"],
+  "dimensions": ["cross-functional-ownership"],
+  "move": "Describe the new move or behavior.",
+  "guardrail": "Describe the boundary that keeps the move safe.",
+  "prerequisites": ["What needs to be true first"],
+  "linkedTools": [],
+  "outcomeNotes": []
+}

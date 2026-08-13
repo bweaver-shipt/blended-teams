@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/blended-teams/schemas/team.schema.json",
+  "title": "Team Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "area", "roles"],
+  "properties": {
+    "id": {
+      "$ref": "./common-defs.json#/$defs/teamRef"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "area": {
+      "type": "string",
+      "minLength": 1
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  }
+}

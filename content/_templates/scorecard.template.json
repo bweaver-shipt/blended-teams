@@ -1,0 +1,27 @@
+{
+  "id": "team-id-2026-q3",
+  "team": "team-id",
+  "cycle": "2026-Q3",
+  "period": {
+    "start": "2026-07-01",
+    "end": "2026-09-30"
+  },
+  "risks": ["feasibility", "usability"],
+  "dimensions": [
+    "shared-tooling",
+    "cross-functional-ownership",
+    "experiment-velocity",
+    "delivery-autonomy",
+    "impact-learning"
+  ],
+  "scores": {
+    "shared-tooling": 3,
+    "cross-functional-ownership": 3,
+    "experiment-velocity": 3,
+    "delivery-autonomy": 3,
+    "impact-learning": 3
+  },
+  "notes": "Narrative summary for the cycle.",
+  "activeExperiments": [],
+  "observedMovement": "How the team changed compared with the prior cycle."
+}

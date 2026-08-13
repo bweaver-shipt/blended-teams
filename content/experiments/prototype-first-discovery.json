@@ -1,0 +1,15 @@
+{
+  "id": "prototype-first-discovery",
+  "title": "Prototype-first discovery",
+  "hypothesis": "If the team starts implementation discussions from a working prototype and a reusable prompt, fewer clarifying handoffs will be needed before engineering begins.",
+  "owner": "Alex Rivera",
+  "team": "payments-platform",
+  "risks": ["usability", "feasibility"],
+  "dimensions": ["experiment-velocity", "delivery-autonomy"],
+  "reviewDate": "2026-09-30",
+  "status": "active",
+  "changeSummary": "The team is replacing static design review handoffs with prototype-plus-prompt kickoff sessions.",
+  "linkedTools": ["prototype-to-pr"],
+  "linkedPlays": ["designer-ships-working-prototype"],
+  "linkedScorecards": ["payments-platform-2026-q3"]
+}

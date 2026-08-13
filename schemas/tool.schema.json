@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/blended-teams/schemas/tool.schema.json",
+  "title": "Tool Registry Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "summary",
+    "team",
+    "roles",
+    "risks",
+    "dimensions",
+    "handoffRemoved",
+    "setup",
+    "limitations",
+    "linkedPlays",
+    "linkedExperiments",
+    "adoptionCount",
+    "triedByTeams"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "./common-defs.json#/$defs/recordId"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "team": {
+      "$ref": "./common-defs.json#/$defs/teamRef"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "risks": {
+      "$ref": "./common-defs.json#/$defs/riskArray"
+    },
+    "dimensions": {
+      "$ref": "./common-defs.json#/$defs/dimensionArray"
+    },
+    "handoffRemoved": {
+      "type": "string",
+      "minLength": 1
+    },
+    "setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "content"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["prompt", "checklist", "script", "workflow", "other"]
+        },
+        "content": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "limitations": {
+      "type": "string",
+      "minLength": 1
+    },
+    "linkedPlays": {
+      "type": "array",
+      "items": {
+        "$ref": "./common-defs.json#/$defs/recordId"
+      },
+      "uniqueItems": true
+    },
+    "linkedExperiments": {
+      "type": "array",
+      "items": {
+        "$ref": "./common-defs.json#/$defs/recordId"
+      },
+      "uniqueItems": true
+    },
+    "adoptionCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "triedByTeams": {
+      "type": "array",
+      "items": {
+        "$ref": "./common-defs.json#/$defs/teamRef"
+      },
+      "uniqueItems": true
+    }
+  }
+}

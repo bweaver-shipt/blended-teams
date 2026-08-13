@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/blended-teams/schemas/outcome.schema.json",
+  "title": "Outcome Note Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "team",
+    "title",
+    "summary",
+    "status",
+    "risks",
+    "dimensions",
+    "linkedTools",
+    "linkedPlays",
+    "linkedExperiments"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "./common-defs.json#/$defs/recordId"
+    },
+    "team": {
+      "$ref": "./common-defs.json#/$defs/teamRef"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["kept", "dropped", "inconclusive"]
+    },
+    "risks": {
+      "$ref": "./common-defs.json#/$defs/riskArray"
+    },
+    "dimensions": {
+      "$ref": "./common-defs.json#/$defs/dimensionArray"
+    },
+    "linkedTools": {
+      "type": "array",
+      "items": {
+        "$ref": "./common-defs.json#/$defs/recordId"
+      },
+      "uniqueItems": true
+    },
+    "linkedPlays": {
+      "type": "array",
+      "items": {
+        "$ref": "./common-defs.json#/$defs/recordId"
+      },
+      "uniqueItems": true
+    },
+    "linkedExperiments": {
+      "type": "array",
+      "items": {
+        "$ref": "./common-defs.json#/$defs/recordId"
+      },
+      "uniqueItems": true
+    }
+  }
+}

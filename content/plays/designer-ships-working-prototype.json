@@ -1,0 +1,17 @@
+{
+  "id": "designer-ships-working-prototype",
+  "title": "Designer ships a working prototype",
+  "role": "designer",
+  "adjacentRole": "engineer",
+  "team": "payments-platform",
+  "risks": ["usability", "feasibility"],
+  "dimensions": ["cross-functional-ownership", "delivery-autonomy"],
+  "move": "Instead of handing off a static mock, the designer provides a working prototype that already captures intent, states, and primary interaction flow.",
+  "guardrail": "The prototype must explicitly call out unknown technical constraints and cannot be treated as final architecture.",
+  "prerequisites": [
+    "Shared prototype tooling",
+    "Agreement on what counts as implementation-ready detail"
+  ],
+  "linkedTools": ["prototype-to-pr"],
+  "outcomeNotes": ["prototype-first-outcome"]
+}
