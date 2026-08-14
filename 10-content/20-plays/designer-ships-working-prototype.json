@@ -13,5 +13,6 @@
     "Agreement on what counts as implementation-ready detail"
   ],
   "linkedTools": ["prototype-to-pr"],
-  "outcomeNotes": ["prototype-first-outcome"]
+  "outcomeNotes": ["prototype-first-outcome"],
+  "example": true
 }

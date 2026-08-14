@@ -1,6 +1,7 @@
 import { getExperiments } from '@/lib/loaders';
 import { STATUS_LABELS, type ExperimentStatus } from '@/lib/types';
 import Badge from '@/components/Badge';
+import ExampleMarker from '@/components/ExampleMarker';
 import Link from 'next/link';
 
 const STATUS_ORDER: ExperimentStatus[] = ['active', 'kept', 'dropped', 'inconclusive'];
@@ -31,6 +32,7 @@ export default function ExperimentsPage() {
                 <Link key={e.id} href={`/experiments/${e.id}`} className="block bg-white border border-slate-200 rounded-lg p-3 hover:border-slate-400 hover:shadow-sm transition-all">
                   <p className="font-medium text-sm text-slate-800 leading-snug mb-1">{e.title}</p>
                   <p className="text-xs text-slate-500 line-clamp-2">{e.hypothesis}</p>
+                  {e.example && <div className="mt-2"><ExampleMarker /></div>}
                   <div className="mt-2 flex flex-wrap gap-1">
                     {e.risks.map((r) => <Badge key={r} label={r} variant="risk" />)}
                   </div>

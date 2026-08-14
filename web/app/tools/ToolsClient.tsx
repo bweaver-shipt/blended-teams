@@ -1,8 +1,18 @@
 'use client';
+/**
+ * Renders client-side: `useSearchParams` puts this behind a Suspense boundary, so the card list
+ * (including the `example` flag's marker) only appears after hydration. A no-JS reader sees an
+ * empty list rather than unmarked example content, so Task 9's failure mode can't occur here.
+ *
+ * If this page is ever converted to static rendering for SEO or crawlability, the ExampleMarker
+ * must be carried into the server-rendered path — otherwise example tools would appear in crawled
+ * HTML with their invented `adoptionCount` and `triedByTeams` and nothing marking them as fiction.
+ */
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Badge from '@/components/Badge';
 import FilterBar from '@/components/FilterBar';
+import ExampleMarker from '@/components/ExampleMarker';
 import type { Tool } from '@/lib/types';
 
 interface Props {
@@ -37,6 +47,7 @@ export default function ToolsClient({ tools, filterDefs }: Props) {
               <span className="text-xs text-slate-400 whitespace-nowrap">{t.setup.type}</span>
             </div>
             <p className="text-xs text-slate-500 mb-3 line-clamp-2">{t.summary}</p>
+            {t.example && <div className="mb-3"><ExampleMarker /></div>}
             <div className="flex flex-wrap gap-1 mb-2">
               {t.risks.map((r) => <Badge key={r} label={r} variant="risk" />)}
             </div>

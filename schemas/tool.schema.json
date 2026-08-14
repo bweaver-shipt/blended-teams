@@ -97,6 +97,10 @@
         "$ref": "./common-defs.json#/$defs/teamRef"
       },
       "uniqueItems": true
+    },
+    "example": {
+      "type": "boolean",
+      "description": "Marks this record as illustrative example content. Example records stay browsable and cross-linked but are excluded from every org-wide aggregate. Do not set it on real content."
     }
   }
 }

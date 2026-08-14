@@ -1,97 +1,96 @@
 # Blended Teams
 
-Blended Teams is a GitHub-repo-backed handbook and lightweight app for sharing team tools, borrowed skills, experiments, and scorecard history across an organisation.
+A GitHub-repo-backed handbook and app for sharing team tools, plays, experiments, and scorecard
+history across an organisation.
+
+The core path: a team scores low on a dimension, clicks it, and sees the tools, plays, and
+experiments other teams used to move it.
 
 ## What lives here
 
-This repository has four connected modules:
+Four connected modules:
 
-1. **Tool & prompt registry** for discoverable tools, prompts, and setup patterns.
-2. **Borrowed skills library** for role-crossing plays and guardrails.
-3. **Experiment board + impact ledger** for running and assessing changes in practice.
-4. **Scorecard history** for tracking team movement over time.
+1. **Tool & Prompt Registry** — discoverable tools, prompts, and setup patterns.
+2. **Borrowed Skills Library** — role-crossing plays and their guardrails. A single record is a *play*.
+3. **Experiment Board and impact ledger** — running and assessing changes in practice.
+4. **Scorecard History** — team movement over time.
 
 Everything is connected by a shared taxonomy:
 
 - **Risks**: value, usability, feasibility, viability
-- **Scorecard dimensions**:
-  - shared-tooling
-  - cross-functional-ownership
-  - experiment-velocity
-  - delivery-autonomy
-  - impact-learning
+- **Dimensions**: shared-tooling, cross-functional-ownership, experiment-velocity,
+  delivery-autonomy, impact-learning
+
+Both vocabularies are defined in `schemas/common-defs.json` and explained in
+[the taxonomy](20-docs/10-taxonomy/taxonomy.md).
 
 ## Repository layout
 
-This blueprint works well with a **Johnny Decimal** structure so the repo stays browsable as it grows. The numbers give every top-level area a stable home and make it easier to talk about where things live.
+Content and docs use a Johnny Decimal structure so every area has a stable address.
 
 ```text
-00-admin/
-  00-governance/
-  10-contributing/
-01-taxonomy-and-schemas/
-  10-taxonomy/
-  20-schemas/
 10-content/
-  10-tools/
-  20-plays/
-  30-experiments/
-  40-teams/
-  50-outcomes/
-  60-scorecards/
-  90-templates/
-20-app/
-  10-routes/
-  20-components/
-30-docs/
-  10-concepts/
-  20-reporting/
-.github/
+  10-tools/        Tool and prompt registry entries
+  20-plays/        Plays for the Borrowed Skills Library
+  30-experiments/  Experiment records
+  40-teams/        Team reference records
+  50-outcomes/     Outcome notes
+  60-scorecards/   Team scorecard cycles
+  90-templates/    Record templates for contributors
+20-docs/
+  10-taxonomy/     Risks, dimensions, tagging guidance
+  20-contributing/ How to contribute a record
+  30-architecture/ Repo structure, routes, reporting, decisions
+schemas/           JSON Schemas
+scripts/           Content validation
+web/               Next.js app
+.github/           Workflows and templates
 ```
 
-The current sample files in this blueprint still use plain directories for readability, but I recommend numbering the real repo from the start.
+`schemas/`, `scripts/`, `web/`, and `.github/` are deliberately unnumbered — tooling and GitHub
+address those by name.
 
 ## Content model
 
-All records are JSON so they are:
+All records are JSON so they are easy to validate in CI, easy to diff in pull requests, and easy for
+the app to load at build time.
 
-- easy to validate in CI
-- easy to diff in pull requests
-- easy for a lightweight app to load statically
+Every record has a stable `id`, a human-readable `title` or `name`, at least one `risk`, at least one
+`dimension`, and an owning team.
 
-Every record should include:
+Records may also carry `"example": true`, which marks them as illustrative. Example records stay
+browsable and cross-linked but are excluded from every org-wide aggregate. The `payments-platform`
+chain in this repository is example content.
 
-- a stable `id`
-- a human-readable `title` or `name`
-- tags for one or more `risks`
-- tags for one or more `dimensions`
-- ownership or attribution to a team
+## Contributing
 
-## Contribution model
+1. Copy the relevant template from `10-content/90-templates/`.
+2. Add it to the matching directory under `10-content/`.
+3. Run `npm install && npm run validate`.
+4. Open a pull request with the contribution template.
+5. Maintainers review for clarity, evidence, and taxonomy fit.
 
-Anyone in the organisation can contribute by opening a pull request.
+Full detail in [the contribution guide](20-docs/20-contributing/contribution-guide.md).
 
-The preferred contribution path is:
+## Running the app
 
-1. Copy the relevant template from `10-content/90-templates/`
-2. Add or update a record in the matching Johnny Decimal content directory
-3. Open a pull request with the contribution template
-4. Maintainers review for clarity, evidence, and taxonomy fit
+```bash
+cd web
+npm install
+npm run dev
+```
 
-## Suggested app shape
+The app reads JSON from `10-content/` at build time. To reproduce the published build:
 
-The app can be a small static site generator build, such as Next.js static export, Astro, or Eleventy. It should provide:
+```bash
+NEXT_PUBLIC_BASE_PATH=/blended-teams npm run build
+```
 
-- browsable indexes for tools, plays, experiments, and scorecards
-- filters by risk, dimension, team, and role
-- detail pages with cross-links between related records
-- org rollups and lightweight aggregate metrics
+Output lands in `web/out`. Pushing to `master` builds and publishes it to GitHub Pages via
+`.github/workflows/deploy.yml`.
 
-## First milestone
+## Validation
 
-The first useful version is:
-
-- schemas committed
-- sample seeded records across all modules
-- contribution docs and PR templates
-- a basic app that renders the four module views from repo content
+`.github/workflows/validate-content.yml` runs on every pull request. It checks each record against
+its schema and confirms every cross-link resolves to a record that exists. Run it locally with
+`npm run validate` from the repository root.

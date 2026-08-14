@@ -11,5 +11,6 @@
   "changeSummary": "The team is replacing static design review handoffs with prototype-plus-prompt kickoff sessions.",
   "linkedTools": ["prototype-to-pr"],
   "linkedPlays": ["designer-ships-working-prototype"],
-  "linkedScorecards": ["payments-platform-2026-q3"]
+  "linkedScorecards": ["payments-platform-2026-q3"],
+  "example": true
 }

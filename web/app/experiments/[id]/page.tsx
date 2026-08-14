@@ -1,6 +1,7 @@
-import { getExperiments, getTools, getPlays, getScorecards } from '@/lib/loaders';
+import { getExperiments, getTools, getPlays, getScorecards, getOutcomes } from '@/lib/loaders';
 import { notFound } from 'next/navigation';
 import Badge from '@/components/Badge';
+import ExampleMarker, { ExampleNotice } from '@/components/ExampleMarker';
 import Link from 'next/link';
 
 export function generateStaticParams() {
@@ -15,6 +16,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
   const tools = getTools().filter((t) => exp.linkedTools.includes(t.id));
   const plays = getPlays().filter((p) => exp.linkedPlays.includes(p.id));
   const scorecards = getScorecards().filter((s) => exp.linkedScorecards.includes(s.id));
+  const outcomes = getOutcomes().filter((o) => o.linkedExperiments.includes(exp.id));
 
   return (
     <div className="max-w-3xl space-y-8">
@@ -29,6 +31,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
           {exp.dimensions.map((d) => <Badge key={d} label={d} variant="dimension" />)}
         </div>
       </div>
+
+      {exp.example && <ExampleNotice kind="experiment" />}
 
       <div className="grid sm:grid-cols-3 gap-4 text-sm">
         <div className="bg-white border border-slate-200 rounded-lg p-4">
@@ -63,6 +67,27 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
               <Link key={t.id} href={`/tools/${t.id}`} className="block bg-white border border-slate-200 rounded-lg px-4 py-3 hover:border-slate-400 transition-colors">
                 <span className="font-medium text-sm">{t.name}</span>
               </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {outcomes.length > 0 && (
+        <div>
+          <h2 className="font-semibold text-slate-800 mb-3">Outcome Notes</h2>
+          <div className="space-y-2">
+            {outcomes.map((o) => (
+              <div key={o.id} className="bg-white border border-slate-200 rounded-lg px-4 py-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-medium text-sm">{o.title}</span>
+                  <Badge label={o.status} variant="status" />
+                </div>
+                <p className="text-sm text-slate-600 mt-2">{o.summary}</p>
+                {o.example && <div className="mt-2"><ExampleMarker /></div>}
+                <p className="text-xs text-slate-400 mt-2">
+                  Reported by <Link href={`/teams/${o.team}`} className="hover:underline">{o.team}</Link>
+                </p>
+              </div>
             ))}
           </div>
         </div>

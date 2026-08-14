@@ -37,6 +37,11 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: /blended-teams
 
+      # Pages serves the artifact through Jekyll by default, which strips paths
+      # beginning with an underscore — including Next.js's _next/ asset directory.
+      - name: Ensure .nojekyll
+        run: touch web/out/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

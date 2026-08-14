@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.org/blended-teams/schemas/play.schema.json",
-  "title": "Borrowed Skill Entry",
+  "title": "Play Entry",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -71,6 +71,10 @@
         "$ref": "./common-defs.json#/$defs/recordId"
       },
       "uniqueItems": true
+    },
+    "example": {
+      "type": "boolean",
+      "description": "Marks this record as illustrative example content. Example records stay browsable and cross-linked but are excluded from every org-wide aggregate. Do not set it on real content."
     }
   }
 }

@@ -6,10 +6,10 @@ export default function HomePage() {
   const m = getOrgMetrics();
 
   const modules = [
-    { href: '/tools', label: 'Tool & Prompt Registry', count: m.totalTools, desc: 'Reusable tools, prompts, and workflows with setup instructions and adoption tracking.' },
-    { href: '/plays', label: 'Borrowed Skills Library', count: m.totalPlays, desc: 'Cross-role moves with guardrails and prerequisites, linked to tools and outcomes.' },
-    { href: '/experiments', label: 'Experiment Board', count: m.totalExperiments, desc: 'Active and completed experiments grouped by status, linked to plays and scorecards.' },
-    { href: '/scorecards', label: 'Scorecard History', count: m.totalScorecards, desc: 'Team scores across five dimensions with trend tracking and experiment linkage.' },
+    { href: '/tools', label: 'Tool & Prompt Registry', count: m.catalogue.tools, desc: 'Reusable tools, prompts, and workflows with setup instructions and adoption tracking.' },
+    { href: '/plays', label: 'Borrowed Skills Library', count: m.catalogue.plays, desc: 'Cross-role plays with guardrails and prerequisites, linked to tools and outcomes.' },
+    { href: '/experiments', label: 'Experiment Board', count: m.catalogue.experiments, desc: 'Active and completed experiments grouped by status, linked to plays and scorecards.' },
+    { href: '/scorecards', label: 'Scorecard History', count: m.catalogue.scorecards, desc: 'Team scores across five dimensions with trend tracking and experiment linkage.' },
   ];
 
   return (
@@ -21,23 +21,39 @@ export default function HomePage() {
         </p>
       </div>
 
-      {/* Org metrics */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        {[
-          { label: 'Teams', value: m.totalTeams },
-          { label: 'Experiments', value: m.totalExperiments },
-          { label: 'Kept', value: m.kept },
-          { label: 'Active', value: m.active },
-        ].map((s) => (
-          <div key={s.label} className="bg-white rounded-lg border border-slate-200 p-4 text-center">
-            <div className="text-3xl font-bold text-slate-900">{s.value}</div>
-            <div className="text-sm text-slate-500 mt-1">{s.label}</div>
-          </div>
-        ))}
-      </div>
+      {/* Org metrics — real records only. Example content never counts here. */}
+      {m.hasRealData ? (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {[
+            { label: 'Teams', value: m.totalTeams },
+            { label: 'Experiments', value: m.totalExperiments },
+            { label: 'Kept', value: m.kept },
+            { label: 'Active', value: m.active },
+          ].map((s) => (
+            <div key={s.label} className="bg-white rounded-lg border border-slate-200 p-4 text-center">
+              <div className="text-3xl font-bold text-slate-900">{s.value}</div>
+              <div className="text-sm text-slate-500 mt-1">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white rounded-lg border border-slate-200 p-6">
+          <h2 className="text-lg font-semibold text-slate-800">No org metrics yet</h2>
+          <p className="mt-2 text-sm text-slate-600 max-w-2xl">
+            Everything currently in the repository is example content, so there is nothing real to
+            measure. Rather than show zeros — which would imply we measured and found none — this
+            stays empty until the first real record lands.
+          </p>
+          <p className="mt-2 text-sm text-slate-500">
+            The {m.catalogue.tools + m.catalogue.plays + m.catalogue.experiments + m.catalogue.scorecards + m.catalogue.outcomes} example
+            record{m.catalogue.tools + m.catalogue.plays + m.catalogue.experiments + m.catalogue.scorecards + m.catalogue.outcomes !== 1 ? 's are' : ' is'} still
+            browsable below.
+          </p>
+        </div>
+      )}
 
       {/* Avg scores by dimension */}
-      {Object.keys(m.avgScores).length > 0 && (
+      {m.hasRealData && Object.keys(m.avgScores).length > 0 && (
         <div className="bg-white rounded-lg border border-slate-200 p-6">
           <h2 className="text-lg font-semibold mb-4 text-slate-800">Org Average Scores</h2>
           <div className="space-y-3">

@@ -13,7 +13,7 @@ labels: ["tool"]
 
 ## Risks moved
 
-## Scorecard dimensions helped
+## Dimensions helped
 
 ## Handoff removed
 

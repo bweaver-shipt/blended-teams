@@ -2,6 +2,7 @@ import { getScorecards, getExperiments } from '@/lib/loaders';
 import { ALL_DIMENSIONS, type Dimension } from '@/lib/types';
 import ScoreBar from '@/components/ScoreBar';
 import Badge from '@/components/Badge';
+import { ExampleNotice } from '@/components/ExampleMarker';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -31,6 +32,8 @@ export default async function ScorecardDetailPage({ params }: { params: Promise<
           {sc.risks.map((r) => <Badge key={r} label={r} variant="risk" />)}
         </div>
       </div>
+
+      {sc.example && <ExampleNotice kind="scorecard" />}
 
       <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-4">
         <div className="flex justify-between items-center mb-2">

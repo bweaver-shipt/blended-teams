@@ -1,9 +1,12 @@
-import { getTools, getExperiments } from '@/lib/loaders';
+import { getTools, getExperiments, realOnly } from '@/lib/loaders';
 import { ALL_RISKS, ALL_DIMENSIONS, RISK_LABELS, DIMENSION_LABELS, type Dimension, type Risk } from '@/lib/types';
 
 export default function ImpactPage() {
-  const tools = getTools();
-  const experiments = getExperiments();
+  // The ledger only ever reports real records. Example content is browsable elsewhere.
+  const tools = realOnly(getTools());
+  const experiments = realOnly(getExperiments());
+  const excludedExamples =
+    getTools().length - tools.length + (getExperiments().length - experiments.length);
 
   const total = experiments.length;
   const kept = experiments.filter((e) => e.status === 'kept').length;
@@ -22,12 +25,46 @@ export default function ImpactPage() {
     count: experiments.filter((e) => e.risks.includes(risk)).length,
   }));
 
+  const hasRealData = tools.length + experiments.length > 0;
+
+  const header = (
+    <div>
+      <h1 className="text-2xl font-bold">Impact Ledger</h1>
+      <p className="text-slate-500 mt-1">Aggregate outcomes from real experiments and tool adoption</p>
+    </div>
+  );
+
+  if (!hasRealData) {
+    return (
+      <div className="space-y-10">
+        {header}
+        <div className="bg-white border border-slate-200 rounded-lg p-6">
+          <h2 className="font-semibold text-slate-800">Nothing to report yet</h2>
+          <p className="mt-2 text-sm text-slate-600 max-w-2xl">
+            The ledger counts only real records, and none have been contributed yet. The{' '}
+            {excludedExamples} example record{excludedExamples !== 1 ? 's' : ''} in the repository
+            {excludedExamples !== 1 ? ' are' : ' is'} deliberately excluded, so there is nothing here
+            to aggregate.
+          </p>
+          <p className="mt-2 text-sm text-slate-600 max-w-2xl">
+            Showing zeros and a 0% kept ratio would imply the organisation measured its practice and
+            found nothing. It hasn&apos;t measured anything yet. That distinction is the whole point
+            of this page.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-10">
-      <div>
-        <h1 className="text-2xl font-bold">Impact Ledger</h1>
-        <p className="text-slate-500 mt-1">Aggregate outcomes from all experiments and tool adoption</p>
-      </div>
+      {header}
+
+      {excludedExamples > 0 && (
+        <p className="text-xs text-slate-500">
+          Excludes {excludedExamples} example record{excludedExamples !== 1 ? 's' : ''}.
+        </p>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[

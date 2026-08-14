@@ -15,5 +15,6 @@
   "linkedPlays": ["designer-ships-working-prototype"],
   "linkedExperiments": ["prototype-first-discovery"],
   "adoptionCount": 2,
-  "triedByTeams": ["payments-platform"]
+  "triedByTeams": ["payments-platform"],
+  "example": true
 }
