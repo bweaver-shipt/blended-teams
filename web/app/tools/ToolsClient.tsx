@@ -1,4 +1,13 @@
 'use client';
+/**
+ * Renders client-side: `useSearchParams` puts this behind a Suspense boundary, so the card list
+ * (including the `example` flag's marker) only appears after hydration. A no-JS reader sees an
+ * empty list rather than unmarked example content, so Task 9's failure mode can't occur here.
+ *
+ * If this page is ever converted to static rendering for SEO or crawlability, the ExampleMarker
+ * must be carried into the server-rendered path — otherwise example tools would appear in crawled
+ * HTML with their invented `adoptionCount` and `triedByTeams` and nothing marking them as fiction.
+ */
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Badge from '@/components/Badge';
