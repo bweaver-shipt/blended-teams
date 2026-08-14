@@ -1,6 +1,19 @@
 # Shared taxonomy
 
-This repository uses a single taxonomy so all modules can be filtered, linked, and rolled up consistently.
+This repository uses a single taxonomy so all modules can be filtered, linked, and rolled up
+consistently.
+
+## Terms
+
+A few words are used precisely, and are worth pinning down before the tags:
+
+| Term | Meaning |
+| --- | --- |
+| **Borrowed Skills Library** | The module. One of the four. |
+| **play** | A single record in that library — one role-crossing move with its guardrail. Records are always plays; "borrowed skill" is the module's subject, not a record type. |
+| **dimension** | One of the five scorecard dimensions below. Always "dimension" in schemas, docs, and UI. |
+| **impact ledger** | The org-wide rollup at `/impact`. Shortened to "the ledger" after first mention. |
+| **example content** | A record flagged `"example": true` — illustrative, and excluded from every aggregate. |
 
 ## Risks
 
@@ -13,9 +26,11 @@ These are the four product-delivery risks used across tools, plays, experiments,
 | `feasibility` | The team can build, ship, and operate the solution effectively. |
 | `viability` | The solution works within business, operational, legal, and strategic constraints. |
 
-## Scorecard dimensions
+## Dimensions
 
-These five dimensions make the essay and scorecard operational.
+These five dimensions make the scorecard operational. They are sometimes called "scorecard
+dimensions" in conversation; in this repository, in the schemas, and in the app they are simply
+**dimensions**.
 
 | Dimension | Meaning |
 | --- | --- |

@@ -1,16 +1,19 @@
-import { getScorecards, getExperiments } from '@/lib/loaders';
+import { getScorecards, getExperiments, realOnly, isExample } from '@/lib/loaders';
 import { ALL_DIMENSIONS, DIMENSION_LABELS, type Dimension } from '@/lib/types';
 import ScoreBar from '@/components/ScoreBar';
+import ExampleMarker from '@/components/ExampleMarker';
 import Link from 'next/link';
 
 export default function ScorecardsPage() {
   const scorecards = getScorecards();
   const experiments = getExperiments();
+  // Org rollup is a factual claim, so it only ever averages real scorecards.
+  const realScorecards = realOnly(scorecards);
 
   // Avg per dimension
   const dimTotals: Record<string, number> = {};
   const dimCounts: Record<string, number> = {};
-  for (const sc of scorecards) {
+  for (const sc of realScorecards) {
     for (const [dim, score] of Object.entries(sc.scores)) {
       dimTotals[dim] = (dimTotals[dim] || 0) + score;
       dimCounts[dim] = (dimCounts[dim] || 0) + 1;
@@ -35,12 +38,25 @@ export default function ScorecardsPage() {
         <p className="text-slate-500 mt-1">{scorecards.length} scorecard{scorecards.length !== 1 ? 's' : ''} across {Object.keys(byTeam).length} team{Object.keys(byTeam).length !== 1 ? 's' : ''}</p>
       </div>
 
-      {scorecards.length > 0 && (
+      {realScorecards.length > 0 ? (
         <div className="bg-white border border-slate-200 rounded-lg p-6 space-y-4">
           <h2 className="font-semibold text-slate-800">Org Average Scores</h2>
+          <p className="text-xs text-slate-500">
+            Averaged across {realScorecards.length} real scorecard{realScorecards.length !== 1 ? 's' : ''}.
+            Example scorecards are excluded.
+          </p>
           {avgScores.map(({ dim, avg }) => (
             <ScoreBar key={dim} dimension={dim as Dimension} score={avg} />
           ))}
+        </div>
+      ) : (
+        <div className="bg-white border border-slate-200 rounded-lg p-6">
+          <h2 className="font-semibold text-slate-800">No org averages yet</h2>
+          <p className="mt-2 text-sm text-slate-600 max-w-2xl">
+            Every scorecard currently in the repository is example content, so there is no real
+            score history to average. Averaging the examples would produce a number that looks like
+            a measurement and isn&apos;t one.
+          </p>
         </div>
       )}
 
@@ -74,6 +90,7 @@ export default function ScorecardsPage() {
                         <span className="font-semibold text-sm">{sc.cycle}</span>
                         <span className="text-lg font-bold text-slate-700">{avgScore}/5</span>
                       </div>
+                      {isExample(sc) && <ExampleMarker className="mb-2" />}
                       <p className="text-xs text-slate-400">{sc.period.start} → {sc.period.end}</p>
                       {linkedExps.length > 0 && (
                         <p className="text-xs text-blue-500 mt-1">{linkedExps.length} active experiment{linkedExps.length !== 1 ? 's' : ''}</p>

@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Badge from '@/components/Badge';
 import FilterBar from '@/components/FilterBar';
+import ExampleMarker from '@/components/ExampleMarker';
 import type { Tool } from '@/lib/types';
 
 interface Props {
@@ -37,6 +38,7 @@ export default function ToolsClient({ tools, filterDefs }: Props) {
               <span className="text-xs text-slate-400 whitespace-nowrap">{t.setup.type}</span>
             </div>
             <p className="text-xs text-slate-500 mb-3 line-clamp-2">{t.summary}</p>
+            {t.example && <div className="mb-3"><ExampleMarker /></div>}
             <div className="flex flex-wrap gap-1 mb-2">
               {t.risks.map((r) => <Badge key={r} label={r} variant="risk" />)}
             </div>

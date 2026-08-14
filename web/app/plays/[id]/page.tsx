@@ -1,6 +1,7 @@
-import { getPlays, getTools, getExperiments } from '@/lib/loaders';
+import { getPlays, getTools, getExperiments, getOutcomes } from '@/lib/loaders';
 import { notFound } from 'next/navigation';
 import Badge from '@/components/Badge';
+import ExampleMarker, { ExampleNotice } from '@/components/ExampleMarker';
 import Link from 'next/link';
 
 export function generateStaticParams() {
@@ -14,6 +15,9 @@ export default async function PlayDetailPage({ params }: { params: Promise<{ id:
 
   const tools = getTools().filter((t) => play.linkedTools.includes(t.id));
   const experiments = getExperiments().filter((e) => e.linkedPlays.includes(play.id));
+  const outcomes = getOutcomes().filter(
+    (o) => play.outcomeNotes.includes(o.id) || o.linkedPlays.includes(play.id)
+  );
 
   return (
     <div className="max-w-3xl space-y-8">
@@ -25,6 +29,8 @@ export default async function PlayDetailPage({ params }: { params: Promise<{ id:
           {play.dimensions.map((d) => <Badge key={d} label={d} variant="dimension" />)}
         </div>
       </div>
+
+      {play.example && <ExampleNotice kind="play" />}
 
       <div className="grid sm:grid-cols-2 gap-4 text-sm">
         <div className="bg-white border border-slate-200 rounded-lg p-4">
@@ -71,6 +77,27 @@ export default async function PlayDetailPage({ params }: { params: Promise<{ id:
                 <span className="font-medium text-sm">{t.name}</span>
                 <span className="text-xs text-slate-400 ml-2">{t.setup.type}</span>
               </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {outcomes.length > 0 && (
+        <div>
+          <h2 className="font-semibold text-slate-800 mb-3">Outcome Notes</h2>
+          <div className="space-y-2">
+            {outcomes.map((o) => (
+              <div key={o.id} className="bg-white border border-slate-200 rounded-lg px-4 py-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-medium text-sm">{o.title}</span>
+                  <Badge label={o.status} variant="status" />
+                </div>
+                <p className="text-sm text-slate-600 mt-2">{o.summary}</p>
+                {o.example && <div className="mt-2"><ExampleMarker /></div>}
+                <p className="text-xs text-slate-400 mt-2">
+                  Reported by <Link href={`/teams/${o.team}`} className="hover:underline">{o.team}</Link>
+                </p>
+              </div>
             ))}
           </div>
         </div>

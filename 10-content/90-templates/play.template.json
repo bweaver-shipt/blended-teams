@@ -1,6 +1,6 @@
 {
   "id": "new-play-id",
-  "title": "New borrowed skill title",
+  "title": "New play title",
   "role": "designer",
   "adjacentRole": "engineer",
   "team": "team-id",

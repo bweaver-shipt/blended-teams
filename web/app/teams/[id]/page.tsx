@@ -1,7 +1,8 @@
-import { getTeamIds, getTools, getPlays, getExperiments, getScorecards } from '@/lib/loaders';
+import { getTeamIds, getTeam, getTools, getPlays, getExperiments, getScorecards, getOutcomes } from '@/lib/loaders';
 import { ALL_DIMENSIONS, type Dimension } from '@/lib/types';
 import ScoreBar from '@/components/ScoreBar';
 import Badge from '@/components/Badge';
+import ExampleMarker from '@/components/ExampleMarker';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -14,16 +15,31 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
   const teams = getTeamIds();
   if (!teams.includes(id)) notFound();
 
+  const record = getTeam(id);
   const tools = getTools().filter((t) => t.team === id || t.triedByTeams.includes(id));
   const plays = getPlays().filter((p) => p.team === id);
   const experiments = getExperiments().filter((e) => e.team === id);
+  const outcomes = getOutcomes().filter((o) => o.team === id);
   const scorecards = getScorecards().filter((s) => s.team === id).sort((a, b) => b.cycle.localeCompare(a.cycle));
 
   return (
     <div className="max-w-3xl space-y-8">
       <div>
         <Link href="/teams" className="text-sm text-slate-500 hover:text-slate-700">← Teams</Link>
-        <h1 className="text-2xl font-bold mt-2">{id}</h1>
+        <h1 className="text-2xl font-bold mt-2">{record?.name ?? id}</h1>
+        {record ? (
+          <p className="text-sm text-slate-500 mt-1">{record.area}</p>
+        ) : (
+          <p className="text-sm text-slate-500 mt-1">
+            This team appears in content but has no record in{' '}
+            <code className="text-xs">10-content/40-teams/</code> yet.
+          </p>
+        )}
+        {record && record.roles.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {record.roles.map((r) => <Badge key={r} label={r} />)}
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-3 gap-4 text-center">
@@ -99,6 +115,24 @@ export default async function TeamDetailPage({ params }: { params: Promise<{ id:
                 <span className="font-medium text-sm">{p.title}</span>
                 <span className="text-xs text-slate-400 ml-2">{p.role} → {p.adjacentRole}</span>
               </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {outcomes.length > 0 && (
+        <div>
+          <h2 className="font-semibold text-slate-800 mb-3">Outcome Notes</h2>
+          <div className="space-y-2">
+            {outcomes.map((o) => (
+              <div key={o.id} className="bg-white border border-slate-200 rounded-lg px-4 py-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-medium text-sm">{o.title}</span>
+                  <Badge label={o.status} variant="status" />
+                </div>
+                <p className="text-sm text-slate-600 mt-2">{o.summary}</p>
+                {o.example && <div className="mt-2"><ExampleMarker /></div>}
+              </div>
             ))}
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Badge from '@/components/Badge';
 import FilterBar from '@/components/FilterBar';
+import ExampleMarker from '@/components/ExampleMarker';
 import type { Play } from '@/lib/types';
 
 interface Props {
@@ -32,6 +33,7 @@ export default function PlaysClient({ plays, filterDefs }: Props) {
           <Link key={p.id} href={`/plays/${p.id}`} className="block bg-white border border-slate-200 rounded-lg p-4 hover:border-slate-400 hover:shadow-sm transition-all">
             <h2 className="font-semibold text-sm text-slate-800 mb-1">{p.title}</h2>
             <p className="text-xs text-slate-500 mb-3 line-clamp-2">{p.move}</p>
+            {p.example && <div className="mb-3"><ExampleMarker /></div>}
             <div className="flex flex-wrap gap-1 mb-2">
               {p.risks.map((r) => <Badge key={r} label={r} variant="risk" />)}
             </div>

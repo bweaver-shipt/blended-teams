@@ -1,6 +1,6 @@
 ---
-name: New borrowed skill
-about: Propose a new role-crossing play
+name: New play
+about: Propose a new play for the Borrowed Skills Library
 title: "[Play] "
 labels: ["play"]
 ---
@@ -13,7 +13,7 @@ labels: ["play"]
 
 ## Risks covered
 
-## Scorecard dimensions helped
+## Dimensions helped
 
 ## The move
 

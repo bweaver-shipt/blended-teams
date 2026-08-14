@@ -2,6 +2,7 @@ import { getTools, getPlays, getExperiments } from '@/lib/loaders';
 import { notFound } from 'next/navigation';
 import Badge from '@/components/Badge';
 import CopyButton from '@/components/CopyButton';
+import { ExampleNotice } from '@/components/ExampleMarker';
 import Link from 'next/link';
 
 export function generateStaticParams() {
@@ -27,6 +28,8 @@ export default async function ToolDetailPage({ params }: { params: Promise<{ id:
           {tool.dimensions.map((d) => <Badge key={d} label={d} variant="dimension" />)}
         </div>
       </div>
+
+      {tool.example && <ExampleNotice kind="tool" />}
 
       <div className="grid sm:grid-cols-2 gap-4 text-sm">
         <div className="bg-white border border-slate-200 rounded-lg p-4">

@@ -23,5 +23,6 @@
   },
   "notes": "The team has started reusing prompts and working prototypes, but still records outcomes unevenly.",
   "activeExperiments": ["prototype-first-discovery"],
-  "observedMovement": "Shared tooling and delivery autonomy improved versus the previous cycle."
+  "observedMovement": "Shared tooling and delivery autonomy improved versus the previous cycle.",
+  "example": true
 }

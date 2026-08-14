@@ -6,6 +6,7 @@ export type Dimension =
   | 'delivery-autonomy'
   | 'impact-learning';
 export type ExperimentStatus = 'active' | 'kept' | 'dropped' | 'inconclusive';
+export type OutcomeStatus = 'kept' | 'dropped' | 'inconclusive';
 export type SetupType = 'prompt' | 'checklist' | 'script' | 'workflow' | 'other';
 
 export interface Tool {
@@ -23,6 +24,8 @@ export interface Tool {
   linkedExperiments: string[];
   adoptionCount: number;
   triedByTeams: string[];
+  /** Illustrative example content: browsable, but excluded from every org-wide aggregate. */
+  example?: boolean;
 }
 
 export interface Play {
@@ -38,6 +41,8 @@ export interface Play {
   prerequisites: string[];
   linkedTools: string[];
   outcomeNotes: string[];
+  /** Illustrative example content: browsable, but excluded from every org-wide aggregate. */
+  example?: boolean;
 }
 
 export interface Experiment {
@@ -54,6 +59,8 @@ export interface Experiment {
   linkedTools: string[];
   linkedPlays: string[];
   linkedScorecards: string[];
+  /** Illustrative example content: browsable, but excluded from every org-wide aggregate. */
+  example?: boolean;
 }
 
 export type DimensionScores = Record<Dimension, number>;
@@ -69,11 +76,32 @@ export interface Scorecard {
   notes: string;
   activeExperiments: string[];
   observedMovement: string;
+  /** Illustrative example content: browsable, but excluded from every org-wide aggregate. */
+  example?: boolean;
 }
 
+// Mirrors schemas/outcome.schema.json
+export interface Outcome {
+  id: string;
+  team: string;
+  title: string;
+  summary: string;
+  status: OutcomeStatus;
+  risks: Risk[];
+  dimensions: Dimension[];
+  linkedTools: string[];
+  linkedPlays: string[];
+  linkedExperiments: string[];
+  /** Illustrative example content: browsable, but excluded from every org-wide aggregate. */
+  example?: boolean;
+}
+
+// Mirrors schemas/team.schema.json
 export interface Team {
   id: string;
-  name?: string;
+  name: string;
+  area: string;
+  roles: string[];
 }
 
 export const ALL_RISKS: Risk[] = ['value', 'usability', 'feasibility', 'viability'];

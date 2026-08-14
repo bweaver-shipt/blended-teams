@@ -8,5 +8,6 @@
   "dimensions": ["impact-learning", "delivery-autonomy"],
   "linkedTools": ["prototype-to-pr"],
   "linkedPlays": ["designer-ships-working-prototype"],
-  "linkedExperiments": ["prototype-first-discovery"]
+  "linkedExperiments": ["prototype-first-discovery"],
+  "example": true
 }
